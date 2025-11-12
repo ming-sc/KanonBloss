@@ -54,10 +54,10 @@ jobs:
           coverFilePath: "./.deploy/cover.png"
           title: "github action 自动化发布测试"
           description: >
-            如你所见, 这是一个由 github action 自动发布的作品\n
+            如你所见, 这是一个由 github action 自动发布的作品\\n
             该作品使用 [goboscript](https://github.com/aspizu/goboscript/) 制作, 
             通过 github action 自动化构建和发布, 只需在 github 上发布 release 即可, 
-            实现持续集成和持续交付(CI/CD)\n\n
+            实现持续集成和持续交付(CI/CD)\\n\\n
             详见 [ming-sc/KanonBloss](https://github.com/ming-sc/KanonBloss)
           operatingInstruction: ""
           releaseDescription: ${{ github.event_name != 'release' && github.event.head_commit.message || github.event.release.body }}
