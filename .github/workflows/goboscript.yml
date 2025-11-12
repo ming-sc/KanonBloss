@@ -53,8 +53,9 @@ jobs:
           sb3FilePath: "./KanonBloss.sb3"
           coverFilePath: "./.deploy/cover.png"
           title: "github action 自动化发布测试"
-          description: |
+          description: >-
             如你所见, 这是一个由 github action 自动发布的作品
+
             该作品使用 [goboscript](https://github.com/aspizu/goboscript/) 制作, 
             通过 github action 自动化构建和发布, 只需在 github 上发布 release 即可, 
             实现持续集成和持续交付(CI/CD)
