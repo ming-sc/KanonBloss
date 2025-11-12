@@ -49,7 +49,7 @@ jobs:
       - name: CCW Deploy Action
         uses: IMG-F/deploy-to-ccw@v1.0.2
         with:
-          oid: "691477bc1d82a725986fb672"
+          oid: "691470af414a6a3af4f1ad03"
           sb3FilePath: "./KanonBloss.sb3"
           coverFilePath: "./.deploy/cover.png"
           title: "github action 自动化发布测试"
@@ -63,7 +63,7 @@ jobs:
             详见 [ming-sc/KanonBloss](https://github.com/ming-sc/KanonBloss)
           operatingInstruction: ""
           releaseDescription: ${{ github.event_name != 'release' && github.event.head_commit.message || github.event.release.body }}
-          customVersion: "1.0.0"
-          publishedFeedSwitch: "false"
+          customVersion: ${{ github.event_name != 'release' && format('snapshot-{0}', steps.create_timestamp.outputs.timestamp) || github.event.release.tag_name }}
+          publishedFeedSwitch: "true"
           token: ${{ secrets.token }}
           userId: ${{ secrets.userId }}
