@@ -1,0 +1,4 @@
+# Configuration Reference: <https://aspizu.github.io/goboscript/configuration>
+frame_rate=60
+interpolation=true
+hq=true
