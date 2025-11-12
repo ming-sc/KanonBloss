@@ -45,3 +45,20 @@ jobs:
           prerelease: ${{ github.event_name != 'release' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: CCW Deploy Action
+        uses: IMG-F/deploy-to-ccw@v1.0.2
+        with:
+          oid: "691477bc1d82a725986fb672"
+          sb3FilePath: "./KanonBloss.sb3"
+          coverFilePath: "./.deploy/cover.png"
+          title: "github action 自动化发布测试"
+          description: >
+            如你所见, 这是一个由 github action 自动发布的作品
+            t
+          operatingInstruction: ""
+          releaseDescription: ${{ github.event_name != 'release' && github.event.head_commit.message || github.event.release.body }}
+          customVersion: "1.0.0"
+          publishedFeedSwitch: "false"
+          token: ${{ secrets.token }}
+          userId: ${{ secrets.userId }}
