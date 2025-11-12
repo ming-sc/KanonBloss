@@ -1,0 +1,47 @@
+name: "Build"
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Download goboscript compiler
+        uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          repo: IMG-F/goboscript
+          file: goboscript-x86_64-unknown-linux-gnu
+          target: goboscript-compiler
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Make compiler executable
+        run: chmod +x goboscript-compiler
+
+      - name: Build project
+        run: |
+          ./goboscript-compiler build
+
+      - name: Create timestamp
+        id: create_timestamp
+        run: echo "timestamp=$(date '+%Y-%m-%d-%H-%M-%S')" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Upload sb3 to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: "*.sb3"
+          tag_name: ${{ github.event_name != 'release' && format('snapshot-{0}', steps.create_timestamp.outputs.timestamp) || github.event.release.tag_name }}
+          body: ${{ github.event_name != 'release' && github.event.head_commit.message || github.event.release.body }}
+          prerelease: ${{ github.event_name != 'release' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
