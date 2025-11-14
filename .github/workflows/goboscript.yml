@@ -52,12 +52,12 @@ jobs:
           oid: "691470af414a6a3af4f1ad03"
           sb3FilePath: "./KanonBloss.sb3"
           coverFilePath: "./.deploy/cover.png"
-          title: "github action 自动化发布测试"
+          title: "Github Actions 自动化发布测试"
           description: >-
-            如你所见, 这是一个由 github action 自动发布的作品
+            如你所见, 这是一个由 Github Actions 自动发布的作品
 
             该作品使用 [goboscript](https://github.com/aspizu/goboscript/) 制作, 
-            通过 github action 自动化构建和发布, 只需在 github 上发布 release 即可, 
+            通过 Github Actions 自动化构建和发布, 只需在 github 上发布 release 即可, 
             实现持续集成和持续交付(CI/CD)
             
             详见 [ming-sc/KanonBloss](https://github.com/ming-sc/KanonBloss)
@@ -67,3 +67,50 @@ jobs:
           publishedFeedSwitch: "true"
           token: ${{ secrets.token }}
           userId: ${{ secrets.userId }}
+
+      - name: GitBlock Deploy Action
+        uses: IMG-F/deploy-to-gitblock@v1.0.0
+        with: 
+          projectId: "1409826"
+          sb3FilePath: "./KanonBloss.sb3"
+          coverFilePath: "./.deploy/cover.png"
+          title: "GitHub Actions 自动化发布测试"
+          description: >-
+            **${{ github.event_name != 'release' && format('snapshot-{0}', steps.create_timestamp.outputs.timestamp) || format('v{0}', github.event.release.tag_name) }}: 
+            ${{ github.event_name != 'release' && '' || github.event.release.body }}**  
+
+
+            ------  
+
+
+            **简介**  
+
+
+            [goboscript](https://github.com/aspizu/goboscript/) 使 sc 作品可以用 git 管理版本并在 github 上存储, 
+            既然上传了 github, 那怎么能不试试强大的 Github Actions 呢?  
+
+            所以便有了 [IMG-F/deploy-to-gitblock](https://github.com/IMG-F/deploy-to-gitblock) 这个 action , 
+            通过 Github Actions 自动化发布 sc 作品到 gitblock.  
+
+
+            ------  
+
+
+            **工作流程**  
+
+
+            在 github 仓库上发布 release 后触发 workflow 运行, runner 拉取 goboscript 编译器进行自动构建, 
+            并把构建产物上传至 release , 同时上传到 gitblock 并发布, 全程无需打开编辑器页面.  
+
+
+            ------  
+
+
+            **更多**  
+
+
+            详见 [ming-sc/KanonBloss](https://github.com/ming-sc/KanonBloss)
+
+          tags: "Github Actions, Kanon, Key"
+          username: "${{ secrets.GITBLOCK_USERNAME }}"
+          password: "${{ secrets.GITBLOCK_PASSWORD }}"
